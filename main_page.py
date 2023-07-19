@@ -165,6 +165,22 @@ def last_page():
     else:
         food_item3 = FoodItem('', '','', '',remove_frame=True)
         food_item3.configure(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
+
+#when clicking the button, delete the selected item from cart
+def delete_item():
+    try:
+        selected_item = cart_table.selection()[0]
+        current_idx=cart_table.index(selected_item)
+        cart_list.remove(cart_list[current_idx])
+        Totalcost.remove(Totalcost[current_idx])
+        cart_table.delete(selected_item)
+        Total=0
+        for item in Totalcost:
+            Total=Total+item
+        Total_2dp="%.2f" %Total
+        Total_cost.configure(text="Total cost: ${}".format(Total_2dp))
+    except:
+        pass
         
 #Set up the window 
 window = Tk()
