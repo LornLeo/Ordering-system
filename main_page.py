@@ -1,6 +1,7 @@
 from tkinter import *
 from PIL import ImageTk, Image
 import math
+from tkinter import ttk
 
 #Set up the initial menu item dictionaries list
 Menu_index=[{'Image_path': 'salmon-fish.jpg', 'Name': 'Grilled salmon fish', 'Price': '$12.99 ', 'Description': 'Tender, flavorful salmon fillet, grilled to perfection with secret herbs and spices.'},
