@@ -7,6 +7,38 @@ Menu_index=[{'Image_path': 'salmon-fish.jpg', 'Name': 'Grilled salmon fish', 'Pr
 {'Image_path': 'pancake.jpg', 'Name': 'Fluffy Pancake Stack', 'Price': '$9.99 ', 'Description': 'Indulgent pancakes, caramelized edges, topped with syrup, cream, and seasonal fruits.'},
 {'Image_path': 'steak.jpg', 'Name': 'Juicy Sirloin Steak', 'Price': '$15.99 ', 'Description': 'Prime beef, seared crust, juicy tenderness, served with roasted vegetables and savory sauces.'}]
 
+#Set up list to store the food item for each category 
+category_1_dict=[{'Image_path': 'salmon-fish.jpg', 'Name': 'Grilled salmon fish', 'Price': '$12.99 ', 'Description': 'Tender, flavorful salmon fillet, grilled to perfection with secret herbs and spices.'},
+{'Image_path': 'pancake.jpg', 'Name': 'Fluffy Pancake Stack', 'Price': '$9.99 ', 'Description': 'Indulgent pancakes, caramelized edges, topped with syrup, cream, and seasonal fruits.'},
+{'Image_path': 'steak.jpg', 'Name': 'Juicy Sirloin Steak', 'Price': '$15.99 ', 'Description': 'Prime beef, seared crust, juicy tenderness, served with roasted vegetables and savory sauces.'}]
+category_2_dict=[{'Image_path': 'classic-beef-burger.jpg', 'Name': 'Classic Beef Burger', 'Price': '$12.99 ', 'Description': 
+'Beef patty, cheese, sesame seed bun, lettuce, tomato, onions, pickles, ketchup, mustard, and mayo.'},       
+{'Image_path': 'chicken-burger.jpg', 'Name': 'Chicken burger', 'Price': '$13.99 ', 'Description': 'Grilled chicken breast, sesame seed bun, lettuce, tomato, onions, pickles, and choice of sauces.'},
+{'Image_path': 'fish-sandwich.jpg', 'Name': 'Fish sandwich', 'Price': '$10.99 ', 'Description': 'Crispy fish fillet, soft bun, lettuce, tomato, tartar sauce.'},
+{'Image_path': 'pork-roll.jpg', 'Name': 'Pork roll', 'Price': '$11.99 ', 'Description': 'Sliced and seasoned pork roll.'}]
+category_3_dict=[{'Image_path': 'terriyaki-chicken.jpg', 'Name': 'Teriyaki chicken', 'Price': '$8.99 ', 'Description': 'Chicken breast, teriyaki sauce (made with soy sauce, mirin, sugar, ginger, and garlic), and optional sesame seeds.'},
+{'Image_path': 'beef-broccoli.webp', 'Name': 'Beef broccoli ', 'Price': '$6.99 ', 'Description': 'Beef strips, broccoli florets, soy sauce, garlic, ginger, and optional oyster sauce.'},
+{'Image_path': 'tempura-sushi-roll.jpg', 'Name': 'Tempura sushi roll ', 'Price': '$7.99 ', 'Description': 'Sushi rice, nori (seaweed sheet), tempura-fried ingredients, soy sauce, and optional wasabi and pickled ginger.'},
+{'Image_path': 'spring-roll.webp', 'Name': 'Spring roll', 'Price': '$13.99 ', 'Description': 'Rice paper wrappers, vermicelli noodles, vegetables, and optional protein, served with dipping sauce.'},
+{'Image_path': 'pad-thai.jpg', 'Name': 'Pad thai', 'Price': '$14.99 ', 'Description': 'Rice noodles, tofu or choice of protein, eggs, bean sprouts, green onions, peanuts, tamarind sauce.'}]
+category_4_dict=[{'Image_path': 'vegan-pizza.jpg', 'Name': 'Vegan pizza', 'Price': '$12.99 ', 'Description': 'Vegan pizza dough, tomato sauce, vegan cheese, and assorted plant-based toppings.'},
+{'Image_path': 'ham-cheese-pizza.jpg', 'Name': 'Ham cheese pizza', 'Price': '$7.99 ', 'Description': 'Pizza dough, tomato sauce, mozzarella cheese, ham slices.'},
+{'Image_path': 'chicken-pizza.jpg', 'Name': 'Chicken pizza', 'Price': '$8.99 ', 'Description': 'Pizza dough, tomato sauce, mozzarella cheese, grilled chicken, and choice of additional toppings.'},
+{'Image_path': 'pepperoni-pizza.jpg', 'Name': 'Pepperoni pizza', 'Price': '$9.99 ', 'Description': 'Pizza dough, tomato sauce, mozzarella cheese, pepperoni slices.'}]
+category_5_dict=[{'Image_path': 'crispy-fried-chicken.jpg', 'Name': 'Crispy fired chicken', 'Price': '$10.99 ', 'Description': 'Chicken pieces, seasoned flour or batter, oil for frying.'},
+{'Image_path': 'onion-rings.jpg', 'Name': 'Onion rings', 'Price': '$11.99 ', 'Description': 'Sliced onions, batter, oil for frying.'},
+{'Image_path': 'chicken-wings.jpg', 'Name': 'Chicken wings', 'Price': '$13.99 ', 'Description': 'Chicken wings, choice of seasoning or sauce.'},
+{'Image_path': 'tempura-vegetables.jpg', 'Name': 'Tempura vegetables', 'Price': '$13.99 ', 'Description': 'Assorted vegetables coated in tempura batter and fried.'}]
+category_6_dict=[{'Image_path': 'caesar-salad.jpg', 'Name': 'Caesar salad', 'Price': '$7.99 ', 'Description': 'Romaine lettuce, croutons, Parmesan cheese, garlic, lemon juice, Dijon mustard, egg yolks, olive oil.'},
+{'Image_path': 'vegan-wrap.jpg', 'Name': 'Vegan wrap', 'Price': '$8.99 ', 'Description': 'Wrap (e.g., tortilla), choice of vegan protein, assorted vegetables, and vegan sauce or dressing.'}]
+category_7_dict=[{'Image_path': 'coke.jpg', 'Name': 'Coke', 'Price': '$9.99 ', 'Description': 'Carbonated water, high fructose corn syrup, caramel color, phosphoric acid, natural flavors, caffeine.'},
+{'Image_path': 'iced-tea.jpg', 'Name': 'Iced-tea', 'Price': '$5.99 ', 'Description': 'Black tea or green tea, water, sugar or sweetener, lemon.'},
+{'Image_path': 'lemonade.jpg', 'Name': 'Lemonade', 'Price': '$6.99 ', 'Description': 'Freshly squeezed lemons, water, sugar or sweetener.'},
+{'Image_path': 'coffee.jpg', 'Name': 'Coffee', 'Price': '$5.99 ', 'Description': 'Coffee beans, hot water.'}]
+category_8_dict=[{'Image_path': 'pappardelle-pasta.jpg', 'Name': 'Pappardelee pasta', 'Price': '$13.99 ', 'Description': 'Wide and flat ribbons of egg-based pasta, made with flour and eggs.'},
+{'Image_path': 'linguine-pasta.jpg', 'Name': 'Linguine pasta', 'Price': '$12.99 ', 'Description': 'Long, thin, and flat pasta similar to spaghetti, made with durum wheat semolina.'},
+{'Image_path': 'farfalle-pasta.jpg', 'Name': 'fafalle pasta', 'Price': '$11.99 ', 'Description': 'Bowtie-shaped pasta made with durum wheat semolina and water.'}]
+
 page_number=1
 total_page_number=math.ceil(len(Menu_index)/3)
 window = Tk()
