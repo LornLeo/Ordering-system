@@ -109,7 +109,63 @@ def add_order(item_name,item_quantity,item_price):
         Total=Total+item
     Total_2dp="%.2f" %Total
     Total_cost.configure(text="Total cost: ${}".format(Total_2dp))
-    cart_table.insert('', 'end',values=(item_name,item_quantity,item_price))s
+    cart_table.insert('', 'end',values=(item_name,item_quantity,item_price))
+
+#When clicking the next page button or last page button, the page will change and show another set of food item
+def next_page():
+    global page_number   
+    if page_number==total_page_number:
+        page_number=1
+    else:
+        page_number=page_number+1
+    display=str(page_number)+'/'+str(total_page_number)
+    page_displayed.configure(text=display)
+    page_displayed.text=display
+    food_item_1 = FoodItem(Menu_index[(page_number-1)*3]['Image_path'], Menu_index[(page_number-1)*3]['Name'], Menu_index[(page_number-1)*3]['Price'], Menu_index[(page_number-1)*3]['Description'],remove_frame=False)
+    food_item_1.configure(item1_image, item1_name, item1_price, item1_description,item1_order,item1_quantity)
+    if ((page_number-1)*3+1)<len(Menu_index):
+        food_item2 = FoodItem(Menu_index[(page_number-1)*3+1]['Image_path'], Menu_index[(page_number-1)*3+1]['Name'], Menu_index[(page_number-1)*3+1]['Price'], Menu_index[(page_number-1)*3+1]['Description'],remove_frame=False)
+        food_item2.grid(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
+        food_item2.configure(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
+    else:
+        food_item2 = FoodItem('', '','', '',remove_frame=True)
+        
+        food_item2.configure(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
+    if ((page_number-1)*3+2)<len(Menu_index):
+        food_item3 = FoodItem(Menu_index[(page_number-1)*3+2]['Image_path'], Menu_index[(page_number-1)*3+2]['Name'], Menu_index[(page_number-1)*3+2]['Price'], Menu_index[(page_number-1)*3+2]['Description'],remove_frame=False)
+        food_item3.grid(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
+        food_item3.configure(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
+    else:
+        food_item3 = FoodItem('', '','', '',remove_frame=True)
+        food_item3.configure(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
+        
+def last_page():
+    global page_number   
+    if page_number==1:
+        page_number=total_page_number
+    else:
+        page_number=page_number-1
+    display=str(page_number)+'/'+str(total_page_number)
+    page_displayed.configure(text=display)
+    page_displayed.text=display
+    food_item_1 = FoodItem(Menu_index[(page_number-1)*3]['Image_path'], Menu_index[(page_number-1)*3]['Name'], Menu_index[(page_number-1)*3]['Price'], Menu_index[(page_number-1)*3]['Description'],remove_frame=False)
+    food_item_1.configure(item1_image, item1_name, item1_price, item1_description,item1_order,item1_quantity)
+    if ((page_number-1)*3+1)<len(Menu_index):
+        food_item2 = FoodItem(Menu_index[(page_number-1)*3+1]['Image_path'], Menu_index[(page_number-1)*3+1]['Name'], Menu_index[(page_number-1)*3+1]['Price'], Menu_index[(page_number-1)*3+1]['Description'],remove_frame=False)
+        food_item2.grid(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
+        food_item2.configure(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
+    else:
+        food_item2 = FoodItem('', '','', '',remove_frame=True)
+        
+        food_item2.configure(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
+    if ((page_number-1)*3+2)<len(Menu_index):
+        food_item3 = FoodItem(Menu_index[(page_number-1)*3+2]['Image_path'], Menu_index[(page_number-1)*3+2]['Name'], Menu_index[(page_number-1)*3+2]['Price'], Menu_index[(page_number-1)*3+2]['Description'],remove_frame=False)
+        food_item3.grid(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
+        food_item3.configure(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
+    else:
+        food_item3 = FoodItem('', '','', '',remove_frame=True)
+        food_item3.configure(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
+        
 #Set up the window 
 window = Tk()
 window.geometry('1020x550')
