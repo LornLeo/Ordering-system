@@ -189,4 +189,56 @@ Total_cost.grid(row=2,column=0,sticky=W,pady=10)
 delete_button=Button(right_frame,text="Delete",width=9,command=delete_item)
 delete_button.grid(row=3,column=0,sticky=N,pady=9)
 
+
+#class the food item
+#use init method to set the attribute for each food item,including image, name, price,description
+#use grid method to locate each component 
+#use configure method to configure each component
+class FoodItem:
+    def __init__(self,image_path,name,price,description,remove_frame=False):
+        self.image_path=image_path
+        self.name=name
+        self.price=price
+        self.description=description
+        self.quantity=1
+        self.remove_frame=remove_frame
+    def grid(self, item_image, item_name, item_price, item_description,item_order,item_quantity):
+            item_image.grid(row=0,column=0,rowspan=4,sticky=NW)
+            item_name.grid(row=0,column=1,columnspan=3,sticky=NW,padx=(0,100))
+            item_description.grid(row=1,column=1,columnspan=3,padx=0,sticky=NW)
+            item_price.grid(row=2,column=2,sticky=W,padx=15)
+            item_quantity.grid(row=2,column=1,sticky=W+E+N+S,padx=3)
+            item_order.grid(row=2,column=3,sticky=W) 
+
+    def configure(self, item_image, item_name, item_price, item_description,item_order,item_quantity):
+        if self.remove_frame:
+            item_image.grid_remove()
+            item_name.grid_remove()
+            item_price.grid_remove()
+            item_description.grid_remove()
+            item_order.grid_remove()
+            item_quantity.grid_remove()
+        else:
+            food_image = Image.open(self.image_path)
+            resized_image = food_image.resize((150, 100), Image.ANTIALIAS)
+            self.image = ImageTk.PhotoImage(resized_image)
+            item_image.image = self.image 
+            item_image.configure(image=self.image)
+            item_name.configure(text=self.name)
+            item_price.configure(text=self.price)
+            item_description.configure(text=self.description)
+            integer_var = IntVar()
+            integer_var.set(self.quantity)
+            item_quantity.configure(textvariable=integer_var)
+            
+#Set the value of each attribute for each food item
+food_item1 = FoodItem(Menu_index[0]['Image_path'], Menu_index[0]['Name'], Menu_index[0]['Price'], Menu_index[0]['Description'],remove_frame=False)
+food_item1.configure(item1_image, item1_name, item1_price, item1_description,item1_order,item1_quantity)
+
+food_item2 = FoodItem(Menu_index[1]['Image_path'], Menu_index[1]['Name'], Menu_index[1]['Price'], Menu_index[1]['Description'],remove_frame=False)
+food_item2.configure(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
+
+food_item3 = FoodItem(Menu_index[2]['Image_path'], Menu_index[2]['Name'], Menu_index[2]['Price'], Menu_index[2]['Description'],remove_frame=False)
+food_item3.configure(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
+
 window.mainloop()
