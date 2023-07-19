@@ -39,6 +39,10 @@ category_8_dict=[{'Image_path': 'pappardelle-pasta.jpg', 'Name': 'Pappardelee pa
 {'Image_path': 'linguine-pasta.jpg', 'Name': 'Linguine pasta', 'Price': '$12.99 ', 'Description': 'Long, thin, and flat pasta similar to spaghetti, made with durum wheat semolina.'},
 {'Image_path': 'farfalle-pasta.jpg', 'Name': 'fafalle pasta', 'Price': '$11.99 ', 'Description': 'Bowtie-shaped pasta made with durum wheat semolina and water.'}]
 
+#set up the category list and category name list to direct the correspond category and its name
+category_list=[category_1_dict,category_2_dict,category_3_dict,category_4_dict,category_5_dict,category_6_dict,category_7_dict,category_8_dict]
+category_name=["Special","Burgers and Sandwiches","Asian Cuisine","Pizza","Fried Foods","Salads and Wraps","Drinks","Pasta"]
+
 page_number=1
 total_page_number=math.ceil(len(Menu_index)/3)
 window = Tk()
