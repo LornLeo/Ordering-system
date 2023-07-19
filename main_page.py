@@ -92,7 +92,24 @@ def selected_button(button_name,button_press):
         food_item3.configure(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
     button_name.configure(state="disabled")
     button_name.configure(bg="yellow")
-    
+
+#create the function for order button when clicking
+#When clicking, the food item will add to the cart
+def add_order(item_name,item_quantity,item_price):
+    cart_item["Name"] = item_name
+    cart_item["Quantity"] = item_quantity
+    cart_item["Price"] = item_price
+    cart_list.append(cart_item)
+    price=float(cart_item["Price"].replace('$',""))
+    quantity=int(cart_item['Quantity'])
+    item_cost=price*quantity
+    Totalcost.append(item_cost)
+    Total=0
+    for item in Totalcost:
+        Total=Total+item
+    Total_2dp="%.2f" %Total
+    Total_cost.configure(text="Total cost: ${}".format(Total_2dp))
+    cart_table.insert('', 'end',values=(item_name,item_quantity,item_price))s
 #Set up the window 
 window = Tk()
 window.geometry('1020x550')
