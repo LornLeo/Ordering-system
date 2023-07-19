@@ -57,6 +57,42 @@ Totalcost=[]
 #set up the cart item dictionary to store the properties of the cart item
 cart_item={"Name":"","Quantity":"","Price":""}
 
+#Create the function for the category button when clicking
+#When clicking the button, it will change the current menu item to the correspond category
+def selected_button(button_name,button_press):
+    global Menu_index
+    Menu_index=category_list[button_press]
+    global total_page_number
+    total_page_number=math.ceil(len(Menu_index)/3)
+    global page_number
+    page_number=1
+    page_displayed.configure(text="1"+"/"+str(total_page_number))
+    if disable_list[0]!=None:
+        disable_list[0].configure(state="normal",bg="white")
+    else:
+        category_1.configure(state="normal",bg="white")
+    disable_list[0]=button_name
+    
+    food_item_1 = FoodItem(Menu_index[0]['Image_path'], Menu_index[0]['Name'], Menu_index[0]['Price'], Menu_index[0]['Description'],remove_frame=False)
+    food_item_1.configure(item1_image, item1_name, item1_price, item1_description,item1_order,item1_quantity)
+    if len(category_list[button_press]) > 1:
+        food_item2 = FoodItem(Menu_index[1]['Image_path'], Menu_index[1]['Name'], Menu_index[1]['Price'], Menu_index[1]['Description'],remove_frame=False)
+        food_item2.grid(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
+        food_item2.configure(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
+    else:
+        food_item2 = FoodItem('', '','', '',remove_frame=True)
+        
+        food_item2.configure(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
+    if len(category_list[button_press]) > 2:
+        food_item3 = FoodItem(Menu_index[2]['Image_path'], Menu_index[2]['Name'], Menu_index[2]['Price'], Menu_index[2]['Description'],remove_frame=False)
+        food_item3.grid(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
+        food_item3.configure(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
+    else:
+        food_item3 = FoodItem('', '','', '',remove_frame=True)
+        food_item3.configure(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
+    button_name.configure(state="disabled")
+    button_name.configure(bg="yellow")
+    
 #Set up the window 
 window = Tk()
 window.geometry('1020x550')
