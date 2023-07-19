@@ -43,8 +43,20 @@ category_8_dict=[{'Image_path': 'pappardelle-pasta.jpg', 'Name': 'Pappardelee pa
 category_list=[category_1_dict,category_2_dict,category_3_dict,category_4_dict,category_5_dict,category_6_dict,category_7_dict,category_8_dict]
 category_name=["Special","Burgers and Sandwiches","Asian Cuisine","Pizza","Fried Foods","Salads and Wraps","Drinks","Pasta"]
 
+#Set up the page number and calculate the total page based on the item in each current menu
 page_number=1
 total_page_number=math.ceil(len(Menu_index)/3)
+
+#To disable the button selected
+disable_list=[None]
+
+#set up the cart list to store the cart_item
+cart_list=[]
+#set up the total cost list to calculate the total cost of the food item stored in cart  
+Totalcost=[]
+#set up the cart item dictionary to store the properties of the cart item
+cart_item={"Name":"","Quantity":"","Price":""}
+
 window = Tk()
 
 window.geometry('1000x550')
