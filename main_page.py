@@ -182,6 +182,15 @@ def delete_item():
         Total_cost.configure(text="Total cost: ${}".format(Total_2dp))
     except:
         pass
+def deleteall_item():
+    Totalcost.clear()
+    cart_list.clear()
+    cart_table.delete(*cart_table.get_children())
+    Total=0
+    for item in Totalcost:
+        Total=Total+item
+    Total_2dp="%.2f" %Total
+    Total_cost.configure(text="Total cost: ${}".format(Total_2dp))
         
 #Set up the window 
 window = Tk()
@@ -298,7 +307,7 @@ last_page.grid(row=0,column=0,padx=(0,10))
 
 #Set up the cart
 cart_title = Label(right_frame,text="Your Cart",font=('Rockwell 21'),bg='#fcc302',fg="white",width=11,padx=30,pady=3)
-cart_title.grid(row=0,column=0)
+cart_title.grid(row=0,column=0,columnspan=2)
 cart_table=ttk.Treeview(right_frame, column=("Name", "Quantity","Price"), show='headings', height=17)
 style=ttk.Style()
 style.theme_use('clam')
@@ -309,11 +318,14 @@ cart_table.column("# 2", anchor=CENTER,width=57)
 cart_table.heading("# 2", text="Quantity")
 cart_table.column("# 3", anchor=CENTER,width=70)
 cart_table.heading("# 3", text="Price")
-cart_table.grid(row=1,column=0,pady=(25,0))
-Total_cost=Label(right_frame,text="Total cost: ",bg="white",font=('Arial 19'),width=15,anchor=W)
-Total_cost.grid(row=2,column=0,sticky=W,pady=10)
+cart_table.grid(row=1,column=0,columnspan=2,pady=(25,0))
+Total_cost=Label(right_frame,text="Total cost: $0 ",bg="white",font=('Arial 19'),width=15,anchor=W)
+Total_cost.grid(row=2,column=0,sticky=W,columnspan=2,pady=10)
 delete_button=Button(right_frame,text="Delete",width=9,command=delete_item)
 delete_button.grid(row=3,column=0,sticky=N,pady=9)
+deleteall_button=Button(right_frame,text="Delete All",width=9,command=deleteall_item)
+deleteall_button.grid(row=3,column=1,sticky=N,pady=9)
+
 
 
 #class the food item
