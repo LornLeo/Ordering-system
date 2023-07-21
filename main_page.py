@@ -62,6 +62,12 @@ def selected_button(button_name,button_press):
     Menu_index=category_list[button_press]
     global total_page_number
     total_page_number=math.ceil(len(Menu_index)/3)
+    if total_page_number==1:
+        Bunext_page.configure(state="disabled")
+        Bulast_page.configure(state="disabled")
+    else:
+        Bunext_page.configure(state="normal")
+        Bulast_page.configure(state="normal")
     global page_number
     page_number=1
     page_displayed.configure(text="1"+"/"+str(total_page_number))
@@ -71,10 +77,10 @@ def selected_button(button_name,button_press):
         category_1.configure(state="normal",bg="white")
     disable_list[0]=button_name
     
-    food_item_1 = FoodItem(Menu_index[0]['Image_path'], Menu_index[0]['Name'], Menu_index[0]['Price'], Menu_index[0]['Description'],quantity=1,remove_frame=False)
+    food_item_1 = FoodItem(Menu_index[0]['Image_path'], Menu_index[0]['Name'], Menu_index[0]['Price'], Menu_index[0]['Description'],remove_frame=False)
     food_item_1.configure(item1_image, item1_name, item1_price, item1_description,item1_order,item1_quantity)
     if len(category_list[button_press]) > 1:
-        food_item2 = FoodItem(Menu_index[1]['Image_path'], Menu_index[1]['Name'], Menu_index[1]['Price'], Menu_index[1]['Description'],quantity=1,remove_frame=False)
+        food_item2 = FoodItem(Menu_index[1]['Image_path'], Menu_index[1]['Name'], Menu_index[1]['Price'], Menu_index[1]['Description'],remove_frame=False)
         food_item2.grid(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
         food_item2.configure(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
     else:
@@ -82,11 +88,11 @@ def selected_button(button_name,button_press):
         
         food_item2.configure(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
     if len(category_list[button_press]) > 2:
-        food_item3 = FoodItem(Menu_index[2]['Image_path'], Menu_index[2]['Name'], Menu_index[2]['Price'], Menu_index[2]['Description'],quantity=1,remove_frame=False)
+        food_item3 = FoodItem(Menu_index[2]['Image_path'], Menu_index[2]['Name'], Menu_index[2]['Price'], Menu_index[2]['Description'],remove_frame=False)
         food_item3.grid(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
         food_item3.configure(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
     else:
-        food_item3 = FoodItem('', '','', '',quantity=1,remove_frame=True)
+        food_item3 = FoodItem('', '','', '',remove_frame=True)
         food_item3.configure(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
     button_name.configure(state="disabled")
     button_name.configure(bg="yellow")
@@ -120,24 +126,24 @@ def next_page():
     page_displayed.configure(text=display)
     page_displayed.text=display
     quantity=item1_quantity.get()
-    food_item_1 = FoodItem(Menu_index[(page_number-1)*3]['Image_path'], Menu_index[(page_number-1)*3]['Name'], Menu_index[(page_number-1)*3]['Price'], Menu_index[(page_number-1)*3]['Description'],quantity,remove_frame=False)
+    food_item_1 = FoodItem(Menu_index[(page_number-1)*3]['Image_path'], Menu_index[(page_number-1)*3]['Name'], Menu_index[(page_number-1)*3]['Price'], Menu_index[(page_number-1)*3]['Description'],remove_frame=False)
     food_item_1.configure(item1_image, item1_name, item1_price, item1_description,item1_order,item1_quantity)
     if ((page_number-1)*3+1)<len(Menu_index):
         quantity=item2_quantity.get()
-        food_item2 = FoodItem(Menu_index[(page_number-1)*3+1]['Image_path'], Menu_index[(page_number-1)*3+1]['Name'], Menu_index[(page_number-1)*3+1]['Price'], Menu_index[(page_number-1)*3+1]['Description'],quantity,remove_frame=False)
+        food_item2 = FoodItem(Menu_index[(page_number-1)*3+1]['Image_path'], Menu_index[(page_number-1)*3+1]['Name'], Menu_index[(page_number-1)*3+1]['Price'], Menu_index[(page_number-1)*3+1]['Description'],remove_frame=False)
         food_item2.grid(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
         food_item2.configure(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
     else:
-        food_item2 = FoodItem('', '','', '',quantity==1,remove_frame=True)
+        food_item2 = FoodItem('', '','', '',remove_frame=True)
         
         food_item2.configure(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
     if ((page_number-1)*3+2)<len(Menu_index):
         quantity=item3_quantity.get()
-        food_item3 = FoodItem(Menu_index[(page_number-1)*3+2]['Image_path'], Menu_index[(page_number-1)*3+2]['Name'], Menu_index[(page_number-1)*3+2]['Price'], Menu_index[(page_number-1)*3+2]['Description'],quantity,remove_frame=False)
+        food_item3 = FoodItem(Menu_index[(page_number-1)*3+2]['Image_path'], Menu_index[(page_number-1)*3+2]['Name'], Menu_index[(page_number-1)*3+2]['Price'], Menu_index[(page_number-1)*3+2]['Description'],remove_frame=False)
         food_item3.grid(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
         food_item3.configure(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
     else:
-        food_item3 = FoodItem('', '','', '',quantity=1,remove_frame=True)
+        food_item3 = FoodItem('', '','', '',remove_frame=True)
         food_item3.configure(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
         
 def last_page():
@@ -149,12 +155,12 @@ def last_page():
     display=str(page_number)+'/'+str(total_page_number)
     page_displayed.configure(text=display)
     page_displayed.text=display
-    quantity=item2_quantity.get()
-    food_item_1 = FoodItem(Menu_index[(page_number-1)*3]['Image_path'], Menu_index[(page_number-1)*3]['Name'], Menu_index[(page_number-1)*3]['Price'], Menu_index[(page_number-1)*3]['Description'],quantity,remove_frame=False)
+    quantity=item1_quantity.get()
+    food_item_1 = FoodItem(Menu_index[(page_number-1)*3]['Image_path'], Menu_index[(page_number-1)*3]['Name'], Menu_index[(page_number-1)*3]['Price'], Menu_index[(page_number-1)*3]['Description'],remove_frame=False)
     food_item_1.configure(item1_image, item1_name, item1_price, item1_description,item1_order,item1_quantity)
     if ((page_number-1)*3+1)<len(Menu_index):
         quantity=item2_quantity.get()
-        food_item2 = FoodItem(Menu_index[(page_number-1)*3+1]['Image_path'], Menu_index[(page_number-1)*3+1]['Name'], Menu_index[(page_number-1)*3+1]['Price'], Menu_index[(page_number-1)*3+1]['Description'],quantity,remove_frame=False)
+        food_item2 = FoodItem(Menu_index[(page_number-1)*3+1]['Image_path'], Menu_index[(page_number-1)*3+1]['Name'], Menu_index[(page_number-1)*3+1]['Price'], Menu_index[(page_number-1)*3+1]['Description'],remove_frame=False)
         food_item2.grid(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
         food_item2.configure(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
     else:
@@ -163,7 +169,7 @@ def last_page():
         food_item2.configure(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
     if ((page_number-1)*3+2)<len(Menu_index):
         quantity=item3_quantity.get()
-        food_item3 = FoodItem(Menu_index[(page_number-1)*3+2]['Image_path'], Menu_index[(page_number-1)*3+2]['Name'], Menu_index[(page_number-1)*3+2]['Price'], Menu_index[(page_number-1)*3+2]['Description'],quantity,remove_frame=False)
+        food_item3 = FoodItem(Menu_index[(page_number-1)*3+2]['Image_path'], Menu_index[(page_number-1)*3+2]['Name'], Menu_index[(page_number-1)*3+2]['Price'], Menu_index[(page_number-1)*3+2]['Description'],remove_frame=False)
         food_item3.grid(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
         food_item3.configure(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
     else:
@@ -307,7 +313,9 @@ resized_icon = icon_image2.resize((30, 20))
 right_arrowicon = ImageTk.PhotoImage(resized_icon)
 Bulast_page=Button(page_change,image=right_arrowicon,command=last_page)
 Bulast_page.grid(row=0,column=0,padx=(0,10))
-
+if total_page_number==1:
+    Bunext_page.configure(state="disabled")
+    Bulast_page.configure(state="disabled")
 #Set up the cart
 cart_title = Label(right_frame,text="Your Cart",font=('Rockwell 21'),bg='#fcc302',fg="white",width=11,padx=30,pady=3)
 cart_title.grid(row=0,column=0,columnspan=2)
@@ -336,12 +344,12 @@ deleteall_button.grid(row=3,column=1,sticky=N,pady=9)
 #use grid method to locate each component 
 #use configure method to configure each component
 class FoodItem:
-    def __init__(self,image_path,name,price,description,quantity,remove_frame=False):
+    def __init__(self,image_path,name,price,description,remove_frame=False):
         self.image_path=image_path
         self.name=name
         self.price=price
         self.description=description
-        self.quantity=quantity
+        self.quantity=1
         self.remove_frame=remove_frame
     def grid(self, item_image, item_name, item_price, item_description,item_order,item_quantity):
             item_image.grid(row=0,column=0,rowspan=4,sticky=NW)
@@ -373,13 +381,13 @@ class FoodItem:
             item_quantity.configure(textvariable=integer_var)
             
 #Set the value of each attribute for each food item
-food_item1 = FoodItem(Menu_index[0]['Image_path'], Menu_index[0]['Name'], Menu_index[0]['Price'], Menu_index[0]['Description'],quantity=1,remove_frame=False)
+food_item1 = FoodItem(Menu_index[0]['Image_path'], Menu_index[0]['Name'], Menu_index[0]['Price'], Menu_index[0]['Description'],remove_frame=False)
 food_item1.configure(item1_image, item1_name, item1_price, item1_description,item1_order,item1_quantity)
 
-food_item2 = FoodItem(Menu_index[1]['Image_path'], Menu_index[1]['Name'], Menu_index[1]['Price'], Menu_index[1]['Description'],quantity=1,remove_frame=False)
+food_item2 = FoodItem(Menu_index[1]['Image_path'], Menu_index[1]['Name'], Menu_index[1]['Price'], Menu_index[1]['Description'],remove_frame=False)
 food_item2.configure(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
 
-food_item3 = FoodItem(Menu_index[2]['Image_path'], Menu_index[2]['Name'], Menu_index[2]['Price'], Menu_index[2]['Description'],quantity=1,remove_frame=False)
+food_item3 = FoodItem(Menu_index[2]['Image_path'], Menu_index[2]['Name'], Menu_index[2]['Price'], Menu_index[2]['Description'],remove_frame=False)
 food_item3.configure(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
 
 window.mainloop()
