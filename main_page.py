@@ -2,43 +2,40 @@ from tkinter import *
 from PIL import ImageTk, Image
 import math
 from tkinter import ttk
+import csv
 
+#Set up list to store the food item for each category 
+filename="menu_database.csv"
+category_1_dict=[]
+category_2_dict=[]
+category_3_dict=[]
+category_4_dict=[]
+category_5_dict=[]
+category_6_dict=[]
+category_7_dict=[]
+category_8_dict=[]
+#create function to access the data in the csv file
+#add the food item to the correspond category list
+def category_func(category_list,category_name):
+  with open(filename, 'r') as data:
+    for line in csv.DictReader(data):
+      if line["Category"]==category_name:
+          category_list.append(line)
+category_func(category_1_dict,"Special")
+category_func(category_2_dict,"Burgers and Sandwiches")
+category_func(category_3_dict,"Asian Cuisine")
+category_func(category_4_dict,"Pizza")
+category_func(category_5_dict,"Fried Foods")
+category_func(category_6_dict,"Salads and Wrap")
+category_func(category_7_dict,"Drinks")
+category_func(category_8_dict,"Pasta")
 #Set up the initial menu item dictionaries list
 Menu_index=[{'Image_path': 'salmon-fish.jpg', 'Name': 'Grilled salmon fish', 'Price': '$12.99 ', 'Description': 'Tender, flavorful salmon fillet, grilled to perfection with secret herbs and spices.'},
 {'Image_path': 'pancake.jpg', 'Name': 'Fluffy Pancake Stack', 'Price': '$9.99 ', 'Description': 'Indulgent pancakes, caramelized edges, topped with syrup, cream, and seasonal fruits.'},
 {'Image_path': 'steak.jpg', 'Name': 'Juicy Sirloin Steak', 'Price': '$15.99 ', 'Description': 'Prime beef, seared crust, juicy tenderness, served with roasted vegetables and savory sauces.'}]
 
-#Set up list to store the food item for each category 
-category_1_dict=[{'Image_path': 'salmon-fish.jpg', 'Name': 'Grilled salmon fish', 'Price': '$12.99 ', 'Description': 'Tender, flavorful salmon fillet, grilled to perfection with secret herbs and spices.'},
-{'Image_path': 'pancake.jpg', 'Name': 'Fluffy Pancake Stack', 'Price': '$9.99 ', 'Description': 'Indulgent pancakes, caramelized edges, topped with syrup, cream, and seasonal fruits.'},
-{'Image_path': 'steak.jpg', 'Name': 'Juicy Sirloin Steak', 'Price': '$15.99 ', 'Description': 'Prime beef, seared crust, juicy tenderness, served with roasted vegetables and savory sauces.'}]
-category_2_dict=[{'Image_path': 'classic-beef-burger.jpg', 'Name': 'Classic Beef Burger', 'Price': '$12.99 ', 'Description': 
-'Beef patty, cheese, sesame seed bun, lettuce, tomato, onions, pickles, ketchup, mustard, and mayo.'},       
-{'Image_path': 'chicken-burger.jpg', 'Name': 'Chicken burger', 'Price': '$13.99 ', 'Description': 'Grilled chicken breast, sesame seed bun, lettuce, tomato, onions, pickles, and choice of sauces.'},
-{'Image_path': 'fish-sandwich.jpg', 'Name': 'Fish sandwich', 'Price': '$10.99 ', 'Description': 'Crispy fish fillet, soft bun, lettuce, tomato, tartar sauce.'},
-{'Image_path': 'pork-roll.jpg', 'Name': 'Pork roll', 'Price': '$11.99 ', 'Description': 'Sliced and seasoned pork roll.'}]
-category_3_dict=[{'Image_path': 'terriyaki-chicken.jpg', 'Name': 'Teriyaki chicken', 'Price': '$8.99 ', 'Description': 'Chicken breast, teriyaki sauce (made with soy sauce, mirin, sugar, ginger, and garlic), and optional sesame seeds.'},
-{'Image_path': 'beef-broccoli.webp', 'Name': 'Beef broccoli ', 'Price': '$6.99 ', 'Description': 'Beef strips, broccoli florets, soy sauce, garlic, ginger, and optional oyster sauce.'},
-{'Image_path': 'tempura-sushi-roll.jpg', 'Name': 'Tempura sushi roll ', 'Price': '$7.99 ', 'Description': 'Sushi rice, nori (seaweed sheet), tempura-fried ingredients, soy sauce, and optional wasabi and pickled ginger.'},
-{'Image_path': 'spring-roll.webp', 'Name': 'Spring roll', 'Price': '$13.99 ', 'Description': 'Rice paper wrappers, vermicelli noodles, vegetables, and optional protein, served with dipping sauce.'},
-{'Image_path': 'pad-thai.jpg', 'Name': 'Pad thai', 'Price': '$14.99 ', 'Description': 'Rice noodles, tofu or choice of protein, eggs, bean sprouts, green onions, peanuts, tamarind sauce.'}]
-category_4_dict=[{'Image_path': 'vegan-pizza.jpg', 'Name': 'Vegan pizza', 'Price': '$12.99 ', 'Description': 'Vegan pizza dough, tomato sauce, vegan cheese, and assorted plant-based toppings.'},
-{'Image_path': 'ham-cheese-pizza.jpg', 'Name': 'Ham cheese pizza', 'Price': '$7.99 ', 'Description': 'Pizza dough, tomato sauce, mozzarella cheese, ham slices.'},
-{'Image_path': 'chicken-pizza.jpg', 'Name': 'Chicken pizza', 'Price': '$8.99 ', 'Description': 'Pizza dough, tomato sauce, mozzarella cheese, grilled chicken, and choice of additional toppings.'},
-{'Image_path': 'pepperoni-pizza.jpg', 'Name': 'Pepperoni pizza', 'Price': '$9.99 ', 'Description': 'Pizza dough, tomato sauce, mozzarella cheese, pepperoni slices.'}]
-category_5_dict=[{'Image_path': 'crispy-fried-chicken.jpg', 'Name': 'Crispy fired chicken', 'Price': '$10.99 ', 'Description': 'Chicken pieces, seasoned flour or batter, oil for frying.'},
-{'Image_path': 'onion-rings.jpg', 'Name': 'Onion rings', 'Price': '$11.99 ', 'Description': 'Sliced onions, batter, oil for frying.'},
-{'Image_path': 'chicken-wings.jpg', 'Name': 'Chicken wings', 'Price': '$13.99 ', 'Description': 'Chicken wings, choice of seasoning or sauce.'},
-{'Image_path': 'tempura-vegetables.jpg', 'Name': 'Tempura vegetables', 'Price': '$13.99 ', 'Description': 'Assorted vegetables coated in tempura batter and fried.'}]
-category_6_dict=[{'Image_path': 'caesar-salad.jpg', 'Name': 'Caesar salad', 'Price': '$7.99 ', 'Description': 'Romaine lettuce, croutons, Parmesan cheese, garlic, lemon juice, Dijon mustard, egg yolks, olive oil.'},
-{'Image_path': 'vegan-wrap.jpg', 'Name': 'Vegan wrap', 'Price': '$8.99 ', 'Description': 'Wrap (e.g., tortilla), choice of vegan protein, assorted vegetables, and vegan sauce or dressing.'}]
-category_7_dict=[{'Image_path': 'coke.jpg', 'Name': 'Coke', 'Price': '$9.99 ', 'Description': 'Carbonated water, high fructose corn syrup, caramel color, phosphoric acid, natural flavors, caffeine.'},
-{'Image_path': 'iced-tea.jpg', 'Name': 'Iced-tea', 'Price': '$5.99 ', 'Description': 'Black tea or green tea, water, sugar or sweetener, lemon.'},
-{'Image_path': 'lemonade.jpg', 'Name': 'Lemonade', 'Price': '$6.99 ', 'Description': 'Freshly squeezed lemons, water, sugar or sweetener.'},
-{'Image_path': 'coffee.jpg', 'Name': 'Coffee', 'Price': '$5.99 ', 'Description': 'Coffee beans, hot water.'}]
-category_8_dict=[{'Image_path': 'pappardelle-pasta.jpg', 'Name': 'Pappardelee pasta', 'Price': '$13.99 ', 'Description': 'Wide and flat ribbons of egg-based pasta, made with flour and eggs.'},
-{'Image_path': 'linguine-pasta.jpg', 'Name': 'Linguine pasta', 'Price': '$12.99 ', 'Description': 'Long, thin, and flat pasta similar to spaghetti, made with durum wheat semolina.'},
-{'Image_path': 'farfalle-pasta.jpg', 'Name': 'fafalle pasta', 'Price': '$11.99 ', 'Description': 'Bowtie-shaped pasta made with durum wheat semolina and water.'}]
+
+
 
 #set up the category list and category name list to direct the correspond category and its name
 category_list=[category_1_dict,category_2_dict,category_3_dict,category_4_dict,category_5_dict,category_6_dict,category_7_dict,category_8_dict]
@@ -74,10 +71,10 @@ def selected_button(button_name,button_press):
         category_1.configure(state="normal",bg="white")
     disable_list[0]=button_name
     
-    food_item_1 = FoodItem(Menu_index[0]['Image_path'], Menu_index[0]['Name'], Menu_index[0]['Price'], Menu_index[0]['Description'],remove_frame=False)
+    food_item_1 = FoodItem(Menu_index[0]['Image_path'], Menu_index[0]['Name'], Menu_index[0]['Price'], Menu_index[0]['Description'],quantity=1,remove_frame=False)
     food_item_1.configure(item1_image, item1_name, item1_price, item1_description,item1_order,item1_quantity)
     if len(category_list[button_press]) > 1:
-        food_item2 = FoodItem(Menu_index[1]['Image_path'], Menu_index[1]['Name'], Menu_index[1]['Price'], Menu_index[1]['Description'],remove_frame=False)
+        food_item2 = FoodItem(Menu_index[1]['Image_path'], Menu_index[1]['Name'], Menu_index[1]['Price'], Menu_index[1]['Description'],quantity=1,remove_frame=False)
         food_item2.grid(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
         food_item2.configure(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
     else:
@@ -85,11 +82,11 @@ def selected_button(button_name,button_press):
         
         food_item2.configure(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
     if len(category_list[button_press]) > 2:
-        food_item3 = FoodItem(Menu_index[2]['Image_path'], Menu_index[2]['Name'], Menu_index[2]['Price'], Menu_index[2]['Description'],remove_frame=False)
+        food_item3 = FoodItem(Menu_index[2]['Image_path'], Menu_index[2]['Name'], Menu_index[2]['Price'], Menu_index[2]['Description'],quantity=1,remove_frame=False)
         food_item3.grid(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
         food_item3.configure(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
     else:
-        food_item3 = FoodItem('', '','', '',remove_frame=True)
+        food_item3 = FoodItem('', '','', '',quantity=1,remove_frame=True)
         food_item3.configure(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
     button_name.configure(state="disabled")
     button_name.configure(bg="yellow")
@@ -122,22 +119,25 @@ def next_page():
     display=str(page_number)+'/'+str(total_page_number)
     page_displayed.configure(text=display)
     page_displayed.text=display
-    food_item_1 = FoodItem(Menu_index[(page_number-1)*3]['Image_path'], Menu_index[(page_number-1)*3]['Name'], Menu_index[(page_number-1)*3]['Price'], Menu_index[(page_number-1)*3]['Description'],remove_frame=False)
+    quantity=item1_quantity.get()
+    food_item_1 = FoodItem(Menu_index[(page_number-1)*3]['Image_path'], Menu_index[(page_number-1)*3]['Name'], Menu_index[(page_number-1)*3]['Price'], Menu_index[(page_number-1)*3]['Description'],quantity,remove_frame=False)
     food_item_1.configure(item1_image, item1_name, item1_price, item1_description,item1_order,item1_quantity)
     if ((page_number-1)*3+1)<len(Menu_index):
-        food_item2 = FoodItem(Menu_index[(page_number-1)*3+1]['Image_path'], Menu_index[(page_number-1)*3+1]['Name'], Menu_index[(page_number-1)*3+1]['Price'], Menu_index[(page_number-1)*3+1]['Description'],remove_frame=False)
+        quantity=item2_quantity.get()
+        food_item2 = FoodItem(Menu_index[(page_number-1)*3+1]['Image_path'], Menu_index[(page_number-1)*3+1]['Name'], Menu_index[(page_number-1)*3+1]['Price'], Menu_index[(page_number-1)*3+1]['Description'],quantity,remove_frame=False)
         food_item2.grid(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
         food_item2.configure(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
     else:
-        food_item2 = FoodItem('', '','', '',remove_frame=True)
+        food_item2 = FoodItem('', '','', '',quantity==1,remove_frame=True)
         
         food_item2.configure(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
     if ((page_number-1)*3+2)<len(Menu_index):
-        food_item3 = FoodItem(Menu_index[(page_number-1)*3+2]['Image_path'], Menu_index[(page_number-1)*3+2]['Name'], Menu_index[(page_number-1)*3+2]['Price'], Menu_index[(page_number-1)*3+2]['Description'],remove_frame=False)
+        quantity=item3_quantity.get()
+        food_item3 = FoodItem(Menu_index[(page_number-1)*3+2]['Image_path'], Menu_index[(page_number-1)*3+2]['Name'], Menu_index[(page_number-1)*3+2]['Price'], Menu_index[(page_number-1)*3+2]['Description'],quantity,remove_frame=False)
         food_item3.grid(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
         food_item3.configure(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
     else:
-        food_item3 = FoodItem('', '','', '',remove_frame=True)
+        food_item3 = FoodItem('', '','', '',quantity=1,remove_frame=True)
         food_item3.configure(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
         
 def last_page():
@@ -149,10 +149,12 @@ def last_page():
     display=str(page_number)+'/'+str(total_page_number)
     page_displayed.configure(text=display)
     page_displayed.text=display
-    food_item_1 = FoodItem(Menu_index[(page_number-1)*3]['Image_path'], Menu_index[(page_number-1)*3]['Name'], Menu_index[(page_number-1)*3]['Price'], Menu_index[(page_number-1)*3]['Description'],remove_frame=False)
+    quantity=item2_quantity.get()
+    food_item_1 = FoodItem(Menu_index[(page_number-1)*3]['Image_path'], Menu_index[(page_number-1)*3]['Name'], Menu_index[(page_number-1)*3]['Price'], Menu_index[(page_number-1)*3]['Description'],quantity,remove_frame=False)
     food_item_1.configure(item1_image, item1_name, item1_price, item1_description,item1_order,item1_quantity)
     if ((page_number-1)*3+1)<len(Menu_index):
-        food_item2 = FoodItem(Menu_index[(page_number-1)*3+1]['Image_path'], Menu_index[(page_number-1)*3+1]['Name'], Menu_index[(page_number-1)*3+1]['Price'], Menu_index[(page_number-1)*3+1]['Description'],remove_frame=False)
+        quantity=item2_quantity.get()
+        food_item2 = FoodItem(Menu_index[(page_number-1)*3+1]['Image_path'], Menu_index[(page_number-1)*3+1]['Name'], Menu_index[(page_number-1)*3+1]['Price'], Menu_index[(page_number-1)*3+1]['Description'],quantity,remove_frame=False)
         food_item2.grid(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
         food_item2.configure(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
     else:
@@ -160,7 +162,8 @@ def last_page():
         
         food_item2.configure(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
     if ((page_number-1)*3+2)<len(Menu_index):
-        food_item3 = FoodItem(Menu_index[(page_number-1)*3+2]['Image_path'], Menu_index[(page_number-1)*3+2]['Name'], Menu_index[(page_number-1)*3+2]['Price'], Menu_index[(page_number-1)*3+2]['Description'],remove_frame=False)
+        quantity=item3_quantity.get()
+        food_item3 = FoodItem(Menu_index[(page_number-1)*3+2]['Image_path'], Menu_index[(page_number-1)*3+2]['Name'], Menu_index[(page_number-1)*3+2]['Price'], Menu_index[(page_number-1)*3+2]['Description'],quantity,remove_frame=False)
         food_item3.grid(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
         food_item3.configure(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
     else:
@@ -297,13 +300,13 @@ page_displayed.grid(row=0,column=1,sticky=N,pady=(20))
 icon_image1=Image.open("11.png")
 resized_icon = icon_image1.resize((30, 20))
 left_arrowicon = ImageTk.PhotoImage(resized_icon)
-next_page=Button(page_change,image=left_arrowicon,command=next_page)
-next_page.grid(row=0,column=2,padx=10)
+Bunext_page=Button(page_change,image=left_arrowicon,command=next_page)
+Bunext_page.grid(row=0,column=2,padx=10)
 icon_image2=Image.open("b033.png")
 resized_icon = icon_image2.resize((30, 20))
 right_arrowicon = ImageTk.PhotoImage(resized_icon)
-last_page=Button(page_change,image=right_arrowicon,command=last_page)
-last_page.grid(row=0,column=0,padx=(0,10))
+Bulast_page=Button(page_change,image=right_arrowicon,command=last_page)
+Bulast_page.grid(row=0,column=0,padx=(0,10))
 
 #Set up the cart
 cart_title = Label(right_frame,text="Your Cart",font=('Rockwell 21'),bg='#fcc302',fg="white",width=11,padx=30,pady=3)
@@ -333,12 +336,12 @@ deleteall_button.grid(row=3,column=1,sticky=N,pady=9)
 #use grid method to locate each component 
 #use configure method to configure each component
 class FoodItem:
-    def __init__(self,image_path,name,price,description,remove_frame=False):
+    def __init__(self,image_path,name,price,description,quantity,remove_frame=False):
         self.image_path=image_path
         self.name=name
         self.price=price
         self.description=description
-        self.quantity=1
+        self.quantity=quantity
         self.remove_frame=remove_frame
     def grid(self, item_image, item_name, item_price, item_description,item_order,item_quantity):
             item_image.grid(row=0,column=0,rowspan=4,sticky=NW)
@@ -370,13 +373,13 @@ class FoodItem:
             item_quantity.configure(textvariable=integer_var)
             
 #Set the value of each attribute for each food item
-food_item1 = FoodItem(Menu_index[0]['Image_path'], Menu_index[0]['Name'], Menu_index[0]['Price'], Menu_index[0]['Description'],remove_frame=False)
+food_item1 = FoodItem(Menu_index[0]['Image_path'], Menu_index[0]['Name'], Menu_index[0]['Price'], Menu_index[0]['Description'],quantity=1,remove_frame=False)
 food_item1.configure(item1_image, item1_name, item1_price, item1_description,item1_order,item1_quantity)
 
-food_item2 = FoodItem(Menu_index[1]['Image_path'], Menu_index[1]['Name'], Menu_index[1]['Price'], Menu_index[1]['Description'],remove_frame=False)
+food_item2 = FoodItem(Menu_index[1]['Image_path'], Menu_index[1]['Name'], Menu_index[1]['Price'], Menu_index[1]['Description'],quantity=1,remove_frame=False)
 food_item2.configure(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
 
-food_item3 = FoodItem(Menu_index[2]['Image_path'], Menu_index[2]['Name'], Menu_index[2]['Price'], Menu_index[2]['Description'],remove_frame=False)
+food_item3 = FoodItem(Menu_index[2]['Image_path'], Menu_index[2]['Name'], Menu_index[2]['Price'], Menu_index[2]['Description'],quantity=1,remove_frame=False)
 food_item3.configure(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
 
 window.mainloop()
