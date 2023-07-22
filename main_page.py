@@ -30,10 +30,7 @@ category_func(category_6_dict,"Salads and Wrap")
 category_func(category_7_dict,"Drinks")
 category_func(category_8_dict,"Pasta")
 #Set up the initial menu item dictionaries list
-Menu_index=[{'Image_path': 'salmon-fish.jpg', 'Name': 'Grilled salmon fish', 'Price': '$12.99 ', 'Description': 'Tender, flavorful salmon fillet, grilled to perfection with secret herbs and spices.'},
-{'Image_path': 'pancake.jpg', 'Name': 'Fluffy Pancake Stack', 'Price': '$9.99 ', 'Description': 'Indulgent pancakes, caramelized edges, topped with syrup, cream, and seasonal fruits.'},
-{'Image_path': 'steak.jpg', 'Name': 'Juicy Sirloin Steak', 'Price': '$15.99 ', 'Description': 'Prime beef, seared crust, juicy tenderness, served with roasted vegetables and savory sauces.'}]
-
+Menu_index=category_1_dict
 
 
 
@@ -52,8 +49,6 @@ disable_list=[None]
 cart_list=[]
 #set up the total cost list to calculate the total cost of the food item stored in cart  
 Totalcost=[]
-#set up the cart item dictionary to store the properties of the cart item
-cart_item={"Name":"","Quantity":"","Price":""}
 
 #Create the function for the category button when clicking
 #When clicking the button, it will change the current menu item to the correspond category
@@ -76,45 +71,123 @@ def selected_button(button_name,button_press):
     else:
         category_1.configure(state="normal",bg="white")
     disable_list[0]=button_name
-    
-    food_item_1 = FoodItem(Menu_index[0]['Image_path'], Menu_index[0]['Name'], Menu_index[0]['Price'], Menu_index[0]['Description'],remove_frame=False)
+    quantity_1=0
+    quantity_2=0
+    quantity_3=0
+    for item in cart_list:
+        if item['Name']==Menu_index[0]['Name']:
+            quantity_1=item['Quantity']
+    food_item_1 = FoodItem(Menu_index[0]['Image_path'], Menu_index[0]['Name'], Menu_index[0]['Price'], Menu_index[0]['Description'],quantity_1,remove_frame=False)
     food_item_1.configure(item1_image, item1_name, item1_price, item1_description,item1_order,item1_quantity)
+    
     if len(category_list[button_press]) > 1:
-        food_item2 = FoodItem(Menu_index[1]['Image_path'], Menu_index[1]['Name'], Menu_index[1]['Price'], Menu_index[1]['Description'],remove_frame=False)
+        for item in cart_list:
+            if item['Name']==Menu_index[1]['Name']:
+                quantity_2=item['Quantity']
+        food_item2 = FoodItem(Menu_index[1]['Image_path'], Menu_index[1]['Name'], Menu_index[1]['Price'], Menu_index[1]['Description'],quantity_2,remove_frame=False)
         food_item2.grid(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
         food_item2.configure(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
     else:
-        food_item2 = FoodItem('', '','', '',remove_frame=True)
-        
+        food_item2 = FoodItem('', '','', '',quantity_2,remove_frame=True)
         food_item2.configure(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
     if len(category_list[button_press]) > 2:
-        food_item3 = FoodItem(Menu_index[2]['Image_path'], Menu_index[2]['Name'], Menu_index[2]['Price'], Menu_index[2]['Description'],remove_frame=False)
+        for item in cart_list:
+            if item['Name']==Menu_index[2]['Name']:
+                quantity_3=item['Quantity']
+        food_item3 = FoodItem(Menu_index[2]['Image_path'], Menu_index[2]['Name'], Menu_index[2]['Price'], Menu_index[2]['Description'],quantity_3,remove_frame=False)
         food_item3.grid(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
         food_item3.configure(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
     else:
-        food_item3 = FoodItem('', '','', '',remove_frame=True)
+        food_item3 = FoodItem('', '','', '',quantity_3,remove_frame=True)
         food_item3.configure(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
     button_name.configure(state="disabled")
     button_name.configure(bg="yellow")
-
 #create the function for order button when clicking
 #When clicking, the food item will add to the cart
 def add_order(item_name,item_quantity,item_price):
-    cart_item["Name"] = item_name
-    cart_item["Quantity"] = item_quantity
-    cart_item["Price"] = item_price
-    cart_list.append(cart_item)
-    price=float(cart_item["Price"].replace('$',""))
-    quantity=int(cart_item['Quantity'])
-    item_cost=price*quantity
-    Totalcost.append(item_cost)
-    Total=0
-    for item in Totalcost:
-        Total=Total+item
-    Total_2dp="%.2f" %Total
-    Total_cost.configure(text="Total cost: ${}".format(Total_2dp))
-    cart_table.insert('', 'end',values=(item_name,item_quantity,item_price))
+    item_number=0
+    if item_quantity==str(0):
+        if cart_list!=[]:
+            for item in cart_list:
+                if item["Name"]==item_name:
+                    cart_list.remove(item)
+            if cart_list==[]:
+                cart_table.delete(*cart_table.get_children())
+                Total_cost.configure(text="Total cost: $0.00")
+            else:
+                Totalprice=[]
+                for item in cart_list:
+                    price_1=float(item["Price"].replace('$',""))
+                    quantity=int(item["Quantity"])
+                    item_cost=price_1*quantity
+                    Totalprice.append(item_cost)
+                    Total=0
+                    for item in Totalprice:
+                        Total=Total+item
+                    Total_2dp="%.2f" %Total
+                    Total_cost.configure(text="Total cost: ${}".format(Total_2dp))
+                cart_table.delete(*cart_table.get_children())
+                for item in cart_list:
+                    cart_table.insert('', 'end',values=(item["Name"],item["Quantity"],item["Price"]))  
+            
+        else:
+            pass            
+    else:
+        
+        cart_item={}
+        cart_item["Name"] = item_name
+        cart_item["Quantity"] = item_quantity
+        cart_item["Price"] = item_price
+        if cart_item in cart_list:
+            pass
+        else:
+            for item in cart_list:
+                if item["Name"]!=item_name:
+                    item_number=item_number+1
+            for item in cart_list:
+                if item["Name"]==item_name:
+                    index=cart_list.index(item)
+            if item_number<len(cart_list):
+                cart_list[index]["Quantity"]=item_quantity
+                price=float(cart_item["Price"].replace('$',""))
+                quantity=int(cart_list[index]["Quantity"])
+                item_cost=price*quantity
+                Totalprice=[]
 
+                for item in cart_list:
+                    price_1=float(item["Price"].replace('$',""))
+                    quantity=int(item["Quantity"])
+                    item_cost=price_1*quantity
+                    Totalprice.append(item_cost)
+                    Total=0
+                    for item in Totalprice:
+                        Total=Total+item
+                    Total_2dp="%.2f" %Total
+                    Total_cost.configure(text="Total cost: ${}".format(Total_2dp))
+                cart_table.delete(*cart_table.get_children())
+                for item in cart_list:
+                    cart_table.insert('', 'end',values=(item["Name"],item["Quantity"],item["Price"]))  
+            else:
+                cart_list.append(cart_item)
+                price=float(cart_item["Price"].replace('$',""))
+                quantity=int(cart_item['Quantity'])
+                item_cost=price*quantity
+                Totalprice=[]
+                for item in cart_list:
+                    price_1=float(item["Price"].replace('$',""))
+                    quantity=int(item["Quantity"])
+                    item_cost=price_1*quantity
+                    Totalprice.append(item_cost)
+                    Total=0
+                    for item in Totalprice:
+                        Total=Total+item
+                    Total_2dp="%.2f" %Total
+                    Total_cost.configure(text="Total cost: ${}".format(Total_2dp))
+                cart_table.insert('', 'end',values=(item_name,item_quantity,item_price))
+    
+        
+            
+    
 #When clicking the next page button or last page button, the page will change and show another set of food item
 def next_page():
     global page_number   
@@ -125,25 +198,33 @@ def next_page():
     display=str(page_number)+'/'+str(total_page_number)
     page_displayed.configure(text=display)
     page_displayed.text=display
-    quantity=item1_quantity.get()
-    food_item_1 = FoodItem(Menu_index[(page_number-1)*3]['Image_path'], Menu_index[(page_number-1)*3]['Name'], Menu_index[(page_number-1)*3]['Price'], Menu_index[(page_number-1)*3]['Description'],remove_frame=False)
+    quantity_1=0
+    quantity_2=0
+    quantity_3=0
+    for item in cart_list:
+        if item['Name']==Menu_index[(page_number-1)*3]['Name']:
+            quantity_1=item['Quantity']
+    food_item_1 = FoodItem(Menu_index[(page_number-1)*3]['Image_path'], Menu_index[(page_number-1)*3]['Name'], Menu_index[(page_number-1)*3]['Price'], Menu_index[(page_number-1)*3]['Description'],quantity_1,remove_frame=False)
     food_item_1.configure(item1_image, item1_name, item1_price, item1_description,item1_order,item1_quantity)
     if ((page_number-1)*3+1)<len(Menu_index):
-        quantity=item2_quantity.get()
-        food_item2 = FoodItem(Menu_index[(page_number-1)*3+1]['Image_path'], Menu_index[(page_number-1)*3+1]['Name'], Menu_index[(page_number-1)*3+1]['Price'], Menu_index[(page_number-1)*3+1]['Description'],remove_frame=False)
+        for item in cart_list:
+            if item['Name']==Menu_index[(page_number-1)*3+1]['Name']:
+                quantity_2=item['Quantity']
+        food_item2 = FoodItem(Menu_index[(page_number-1)*3+1]['Image_path'], Menu_index[(page_number-1)*3+1]['Name'], Menu_index[(page_number-1)*3+1]['Price'], Menu_index[(page_number-1)*3+1]['Description'],quantity_2,remove_frame=False)
         food_item2.grid(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
         food_item2.configure(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
     else:
-        food_item2 = FoodItem('', '','', '',remove_frame=True)
-        
+        food_item2 = FoodItem('', '','', '',quantity=0,remove_frame=True)
         food_item2.configure(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
     if ((page_number-1)*3+2)<len(Menu_index):
-        quantity=item3_quantity.get()
-        food_item3 = FoodItem(Menu_index[(page_number-1)*3+2]['Image_path'], Menu_index[(page_number-1)*3+2]['Name'], Menu_index[(page_number-1)*3+2]['Price'], Menu_index[(page_number-1)*3+2]['Description'],remove_frame=False)
+        for item in cart_list:
+            if item['Name']==Menu_index[(page_number-1)*3+2]['Name']:
+                quantity_3=item['Quantity']
+        food_item3 = FoodItem(Menu_index[(page_number-1)*3+2]['Image_path'], Menu_index[(page_number-1)*3+2]['Name'], Menu_index[(page_number-1)*3+2]['Price'], Menu_index[(page_number-1)*3+2]['Description'],quantity_3,remove_frame=False)
         food_item3.grid(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
         food_item3.configure(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
     else:
-        food_item3 = FoodItem('', '','', '',remove_frame=True)
+        food_item3 = FoodItem('', '','', '',quantity=0,remove_frame=True)
         food_item3.configure(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
         
 def last_page():
@@ -155,25 +236,34 @@ def last_page():
     display=str(page_number)+'/'+str(total_page_number)
     page_displayed.configure(text=display)
     page_displayed.text=display
-    quantity=item1_quantity.get()
-    food_item_1 = FoodItem(Menu_index[(page_number-1)*3]['Image_path'], Menu_index[(page_number-1)*3]['Name'], Menu_index[(page_number-1)*3]['Price'], Menu_index[(page_number-1)*3]['Description'],remove_frame=False)
+    quantity_1=0
+    quantity_2=0
+    quantity_3=0
+    for item in cart_list:
+        if item['Name']==Menu_index[(page_number-1)*3]['Name']:
+            quantity_1=item['Quantity']
+    food_item_1 = FoodItem(Menu_index[(page_number-1)*3]['Image_path'], Menu_index[(page_number-1)*3]['Name'], Menu_index[(page_number-1)*3]['Price'],Menu_index[(page_number-1)*3]['Description'],quantity_1,remove_frame=False)
     food_item_1.configure(item1_image, item1_name, item1_price, item1_description,item1_order,item1_quantity)
     if ((page_number-1)*3+1)<len(Menu_index):
-        quantity=item2_quantity.get()
-        food_item2 = FoodItem(Menu_index[(page_number-1)*3+1]['Image_path'], Menu_index[(page_number-1)*3+1]['Name'], Menu_index[(page_number-1)*3+1]['Price'], Menu_index[(page_number-1)*3+1]['Description'],remove_frame=False)
+        for item in cart_list:
+            if item['Name']==Menu_index[(page_number-1)*3+1]['Name']:
+                quantity_2=item['Quantity']
+        food_item2 = FoodItem(Menu_index[(page_number-1)*3+1]['Image_path'], Menu_index[(page_number-1)*3+1]['Name'], Menu_index[(page_number-1)*3+1]['Price'], Menu_index[(page_number-1)*3+1]['Description'],quantity_2,remove_frame=False)
         food_item2.grid(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
         food_item2.configure(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
     else:
-        food_item2 = FoodItem('', '','', '',remove_frame=True)
+        food_item2 = FoodItem('', '','', '',quantity=0,remove_frame=True)
         
         food_item2.configure(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
     if ((page_number-1)*3+2)<len(Menu_index):
-        quantity=item3_quantity.get()
-        food_item3 = FoodItem(Menu_index[(page_number-1)*3+2]['Image_path'], Menu_index[(page_number-1)*3+2]['Name'], Menu_index[(page_number-1)*3+2]['Price'], Menu_index[(page_number-1)*3+2]['Description'],remove_frame=False)
+        for item in cart_list:
+            if item['Name']==Menu_index[(page_number-1)*3+2]['Name']:
+                quantity_3=item['Quantity']
+        food_item3 = FoodItem(Menu_index[(page_number-1)*3+2]['Image_path'], Menu_index[(page_number-1)*3+2]['Name'], Menu_index[(page_number-1)*3+2]['Price'], Menu_index[(page_number-1)*3+2]['Description'],quantity_3,remove_frame=False)
         food_item3.grid(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
         food_item3.configure(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
     else:
-        food_item3 = FoodItem('', '','', '',remove_frame=True)
+        food_item3 = FoodItem('', '','', '',quantity=0,remove_frame=True)
         food_item3.configure(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
 
 #when clicking the button, delete the selected item from cart
@@ -255,7 +345,7 @@ item1_description=Label(food_item1,text=Menu_index[0]['Description'],justify="le
 item1_description.grid(row=1,column=1,columnspan=3,padx=0,sticky=NW)
 item1_price=Label(food_item1,text=Menu_index[0]['Price'],justify="left",fg="red",wraplength=350,font=("Arial", 12),pady=7,width=10)
 item1_price.grid(row=2,column=2,sticky=W,padx=15)
-item1_quantity=Spinbox(food_item1,from_=1,to=10,width=5,state="readonly")
+item1_quantity=Spinbox(food_item1,from_=0,to=10,width=5,state="readonly")
 item1_quantity.grid(row=2,column=1,sticky=W+E+N+S,padx=3)
 item1_order=Button(food_item1,text="ORDER",fg="white",bg="red",width=9,font=("Arial", 11,"bold"),command=lambda: add_order(item1_name.cget('text'),item1_quantity.get(),item1_price.cget('text')))
 item1_order.grid(row=2,column=3,sticky=W) 
@@ -274,7 +364,7 @@ item2_description=Label(food_item2,text=Menu_index[0]['Description'],justify="le
 item2_description.grid(row=1,column=1,columnspan=3,padx=0,sticky=NW)
 item2_price=Label(food_item2,text=Menu_index[0]['Price'],justify="left",fg="red",wraplength=350,font=("Arial", 12),pady=7,width=10)
 item2_price.grid(row=2,column=2,sticky=W,padx=15)
-item2_quantity=Spinbox(food_item2,from_=1,to=10,width=5,state="readonly")
+item2_quantity=Spinbox(food_item2,from_=0,to=10,width=5,state="readonly")
 item2_quantity.grid(row=2,column=1,sticky=W+E+N+S,padx=3)
 item2_order=Button(food_item2,text="ORDER",fg="white",bg="red",width=9,font=("Arial", 11,"bold"),command=lambda: add_order(item2_name.cget('text'),item2_quantity.get(),item2_price.cget('text')))
 item2_order.grid(row=2,column=3,sticky=W)
@@ -293,7 +383,7 @@ item3_description=Label(food_item3,text=Menu_index[0]['Description'],justify="le
 item3_description.grid(row=1,column=1,columnspan=3,padx=0,sticky=NW)
 item3_price=Label(food_item3,text=Menu_index[0]['Price'],justify="left",fg="red",wraplength=350,font=("Arial", 12),pady=7,width=10)
 item3_price.grid(row=2,column=2,sticky=W,padx=15)
-item3_quantity=Spinbox(food_item3,from_=1,to=10,width=5,state="readonly")
+item3_quantity=Spinbox(food_item3,from_=0,to=10,width=5,state="readonly")
 item3_quantity.grid(row=2,column=1,sticky=W+E+N+S,padx=3)
 item3_order=Button(food_item3,text="ORDER",fg="white",bg="red",width=9,font=("Arial", 11,"bold"),command=lambda: add_order(item3_name.cget('text'),item3_quantity.get(),item3_price.cget('text')))
 item3_order.grid(row=2,column=3,sticky=W)
@@ -344,12 +434,12 @@ deleteall_button.grid(row=3,column=1,sticky=N,pady=9)
 #use grid method to locate each component 
 #use configure method to configure each component
 class FoodItem:
-    def __init__(self,image_path,name,price,description,remove_frame=False):
+    def __init__(self,image_path,name,price,description,quantity,remove_frame=False):
         self.image_path=image_path
         self.name=name
         self.price=price
         self.description=description
-        self.quantity=1
+        self.quantity=quantity
         self.remove_frame=remove_frame
     def grid(self, item_image, item_name, item_price, item_description,item_order,item_quantity):
             item_image.grid(row=0,column=0,rowspan=4,sticky=NW)
@@ -381,13 +471,13 @@ class FoodItem:
             item_quantity.configure(textvariable=integer_var)
             
 #Set the value of each attribute for each food item
-food_item1 = FoodItem(Menu_index[0]['Image_path'], Menu_index[0]['Name'], Menu_index[0]['Price'], Menu_index[0]['Description'],remove_frame=False)
+food_item1 = FoodItem(Menu_index[0]['Image_path'], Menu_index[0]['Name'], Menu_index[0]['Price'], Menu_index[0]['Description'],quantity=0,remove_frame=False)
 food_item1.configure(item1_image, item1_name, item1_price, item1_description,item1_order,item1_quantity)
 
-food_item2 = FoodItem(Menu_index[1]['Image_path'], Menu_index[1]['Name'], Menu_index[1]['Price'], Menu_index[1]['Description'],remove_frame=False)
+food_item2 = FoodItem(Menu_index[1]['Image_path'], Menu_index[1]['Name'], Menu_index[1]['Price'], Menu_index[1]['Description'],quantity=0,remove_frame=False)
 food_item2.configure(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
 
-food_item3 = FoodItem(Menu_index[2]['Image_path'], Menu_index[2]['Name'], Menu_index[2]['Price'], Menu_index[2]['Description'],remove_frame=False)
+food_item3 = FoodItem(Menu_index[2]['Image_path'], Menu_index[2]['Name'], Menu_index[2]['Price'], Menu_index[2]['Description'],quantity=0,remove_frame=False)
 food_item3.configure(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
 
 window.mainloop()
