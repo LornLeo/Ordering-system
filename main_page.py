@@ -169,9 +169,6 @@ def add_order(item_name,item_quantity,item_price):
                     cart_table.insert('', 'end',values=(item["Name"],item["Quantity"],item["Price"]))  
             else:
                 cart_list.append(cart_item)
-                price=float(cart_item["Price"].replace('$',""))
-                quantity=int(cart_item['Quantity'])
-                item_cost=price*quantity
                 Totalprice=[]
                 for item in cart_list:
                     price_1=float(item["Price"].replace('$',""))
@@ -268,20 +265,47 @@ def last_page():
 
 #when clicking the button, delete the selected item from cart
 def delete_item():
-    try:
         selected_item = cart_table.selection()[0]
         current_idx=cart_table.index(selected_item)
+        for item in Menu_index:
+            if item["Name"]==cart_list[current_idx]["Name"]:
+                if Menu_index.index(item)==0:
+                    food_item_1 = FoodItem(item['Image_path'], item['Name'], item['Price'], item['Description'],quantity=0,remove_frame=False)
+                    food_item_1.configure(item1_image, item1_name, item1_price, item1_description,item1_order,item1_quantity)
+                elif Menu_index.index(item)==1:
+                    food_item_2 = FoodItem(item['Image_path'], item['Name'], item['Price'], item['Description'],quantity=0,remove_frame=False)
+                    food_item_2.configure(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
+                elif Menu_index.index(item)==2:
+                    food_item_3 = FoodItem(item['Image_path'], item['Name'], item['Price'], item['Description'],quantity=0,remove_frame=False)
+                    food_item_3.configure(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
         cart_list.remove(cart_list[current_idx])
-        Totalcost.remove(Totalcost[current_idx])
         cart_table.delete(selected_item)
-        Total=0
-        for item in Totalcost:
-            Total=Total+item
-        Total_2dp="%.2f" %Total
-        Total_cost.configure(text="Total cost: ${}".format(Total_2dp))
-    except:
-        pass
+        Totalprice=[]
+        if cart_list==[]:
+            Total_cost.configure(text="Total cost: $0.00")
+        else:
+            for item in cart_list:
+                price_1=float(item["Price"].replace('$',""))
+                quantity=int(item["Quantity"])
+                item_cost=price_1*quantity
+                Totalprice.append(item_cost)
+                Total=0
+                for item in Totalprice:
+                    Total=Total+item
+                Total_2dp="%.2f" %Total
+                Total_cost.configure(text="Total cost: ${}".format(Total_2dp))
+        
+    
 def deleteall_item():
+    integer_var = IntVar()
+    integer_var.set(0)
+    integer_var2 = IntVar()
+    integer_var2.set(0)
+    integer_var3 = IntVar()
+    integer_var3.set(0)
+    item1_quantity.configure(textvariable=integer_var)
+    item2_quantity.configure(textvariable=integer_var2)
+    item3_quantity.configure(textvariable=integer_var3)
     Totalcost.clear()
     cart_list.clear()
     cart_table.delete(*cart_table.get_children())
@@ -290,6 +314,9 @@ def deleteall_item():
         Total=Total+item
     Total_2dp="%.2f" %Total
     Total_cost.configure(text="Total cost: ${}".format(Total_2dp))
+    item1_quantity.configure(textvariable=None)
+    item2_quantity.configure(textvariable=None)
+    item3_quantity.configure(textvariable=None)
         
 #Set up the window 
 window = Tk()
