@@ -1,9 +1,10 @@
 from tkinter import *
 from PIL import ImageTk, Image
+import subprocess
 import math
 from tkinter import ttk
 import csv
-
+from tkinter import messagebox
 #Set up list to store the food item for each category 
 filename="menu_database.csv"
 category_1_dict=[]
@@ -265,59 +266,79 @@ def last_page():
 
 #when clicking the button, delete the selected item from cart
 def delete_item():
-        selected_item = cart_table.selection()[0]
-        current_idx=cart_table.index(selected_item)
-        for item in Menu_index:
-            if item["Name"]==cart_list[current_idx]["Name"]:
-                if Menu_index.index(item)==0:
-                    food_item_1 = FoodItem(item['Image_path'], item['Name'], item['Price'], item['Description'],quantity=0,remove_frame=False)
-                    food_item_1.configure(item1_image, item1_name, item1_price, item1_description,item1_order,item1_quantity)
-                elif Menu_index.index(item)==1:
-                    food_item_2 = FoodItem(item['Image_path'], item['Name'], item['Price'], item['Description'],quantity=0,remove_frame=False)
-                    food_item_2.configure(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
-                elif Menu_index.index(item)==2:
-                    food_item_3 = FoodItem(item['Image_path'], item['Name'], item['Price'], item['Description'],quantity=0,remove_frame=False)
-                    food_item_3.configure(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
-        cart_list.remove(cart_list[current_idx])
-        cart_table.delete(selected_item)
-        Totalprice=[]
-        if cart_list==[]:
-            Total_cost.configure(text="Total cost: $0.00")
+    if cart_table.selection()==():
+        pass
+    else:
+        result = messagebox.askyesno("Delete", "Are you sure?")
+        if result==True:
+            try:
+                selected_item = cart_table.selection()[0]
+                current_idx=cart_table.index(selected_item)
+                for item in Menu_index:
+                    if item["Name"]==cart_list[current_idx]["Name"]:
+                        if Menu_index.index(item)==(page_number-1)*3:
+                            food_item_1 = FoodItem(item['Image_path'], item['Name'], item['Price'], item['Description'],quantity=0,remove_frame=False)
+                            food_item_1.configure(item1_image, item1_name, item1_price, item1_description,item1_order,item1_quantity)
+                        elif Menu_index.index(item)==((page_number-1)*3+1):
+                            food_item_2 = FoodItem(item['Image_path'], item['Name'], item['Price'], item['Description'],quantity=0,remove_frame=False)
+                            food_item_2.configure(item2_image, item2_name, item2_price, item2_description,item2_order,item2_quantity)
+                        elif Menu_index.index(item)==((page_number-1)*3+2):
+                            food_item_3 = FoodItem(item['Image_path'], item['Name'], item['Price'], item['Description'],quantity=0,remove_frame=False)
+                            food_item_3.configure(item3_image, item3_name, item3_price, item3_description,item3_order,item3_quantity)
+                cart_list.remove(cart_list[current_idx])
+                cart_table.delete(selected_item)
+                Totalprice=[]
+                if cart_list==[]:
+                    Total_cost.configure(text="Total cost: $0.00")
+                else:
+                    for item in cart_list:
+                        price_1=float(item["Price"].replace('$',""))
+                        quantity=int(item["Quantity"])
+                        item_cost=price_1*quantity
+                        Totalprice.append(item_cost)
+                        Total=0
+                        for item in Totalprice:
+                            Total=Total+item
+                        Total_2dp="%.2f" %Total
+                        Total_cost.configure(text="Total cost: ${}".format(Total_2dp))
+            except:
+                pass
         else:
-            for item in cart_list:
-                price_1=float(item["Price"].replace('$',""))
-                quantity=int(item["Quantity"])
-                item_cost=price_1*quantity
-                Totalprice.append(item_cost)
-                Total=0
-                for item in Totalprice:
-                    Total=Total+item
-                Total_2dp="%.2f" %Total
-                Total_cost.configure(text="Total cost: ${}".format(Total_2dp))
+            pass
         
     
 def deleteall_item():
-    integer_var = IntVar()
-    integer_var.set(0)
-    integer_var2 = IntVar()
-    integer_var2.set(0)
-    integer_var3 = IntVar()
-    integer_var3.set(0)
-    item1_quantity.configure(textvariable=integer_var)
-    item2_quantity.configure(textvariable=integer_var2)
-    item3_quantity.configure(textvariable=integer_var3)
-    Totalcost.clear()
-    cart_list.clear()
-    cart_table.delete(*cart_table.get_children())
-    Total=0
-    for item in Totalcost:
-        Total=Total+item
-    Total_2dp="%.2f" %Total
-    Total_cost.configure(text="Total cost: ${}".format(Total_2dp))
-    item1_quantity.configure(textvariable=None)
-    item2_quantity.configure(textvariable=None)
-    item3_quantity.configure(textvariable=None)
-        
+    if cart_list==[]:
+        pass
+    else:
+        result = messagebox.askyesno("Delete All", "Are you sure?")
+        if result==True:
+            integer_var = IntVar()
+            integer_var.set(0)
+            integer_var2 = IntVar()
+            integer_var2.set(0)
+            integer_var3 = IntVar()
+            integer_var3.set(0)
+            item1_quantity.configure(textvariable=integer_var)
+            item2_quantity.configure(textvariable=integer_var2)
+            item3_quantity.configure(textvariable=integer_var3)
+            Totalcost.clear()
+            cart_list.clear()
+            cart_table.delete(*cart_table.get_children())
+            Total=0
+            for item in Totalcost:
+                Total=Total+item
+            Total_2dp="%.2f" %Total
+            Total_cost.configure(text="Total cost: ${}".format(Total_2dp))
+            item1_quantity.configure(textvariable=None)
+            item2_quantity.configure(textvariable=None)
+            item3_quantity.configure(textvariable=None)
+        else:
+            pass
+def logout():
+    window.destroy()
+    subprocess.run(['python', 'main_v3_login.py'])
+    
 #Set up the window 
 window = Tk()
 window.geometry('1020x550')
@@ -356,6 +377,8 @@ category_7=Button(left_frame,text=category_name[6],font=('serif 13'),bg="white",
 category_7.grid(row=7,column=0,pady=(12,0),sticky=W)
 category_8=Button(left_frame,text=category_name[7],font=('serif 13'),bg="white",width=22,activebackground="#FBFF3C",activeforeground="black",padx=5,pady=5,command=lambda:selected_button(category_8,7))
 category_8.grid(row=8,column=0,pady=(12,0),sticky=W)
+Logout_button=Button(left_frame,text="Log out",width=9,command=logout)
+Logout_button.grid(row=9,column=0,sticky=NW,pady=22)
 
 #Set up GUI for each food items' image, name, price and description.
 food_item1=Frame(middle_frame,bg='white')           
@@ -435,7 +458,7 @@ if total_page_number==1:
     Bulast_page.configure(state="disabled")
 #Set up the cart
 cart_title = Label(right_frame,text="Your Cart",font=('Rockwell 21'),bg='#fcc302',fg="white",width=11,padx=30,pady=3)
-cart_title.grid(row=0,column=0,columnspan=2)
+cart_title.grid(row=0,column=0,columnspan=3)
 cart_table=ttk.Treeview(right_frame, column=("Name", "Quantity","Price"), show='headings', height=17)
 style=ttk.Style()
 style.theme_use('clam')
@@ -446,13 +469,16 @@ cart_table.column("# 2", anchor=CENTER,width=57)
 cart_table.heading("# 2", text="Quantity")
 cart_table.column("# 3", anchor=CENTER,width=70)
 cart_table.heading("# 3", text="Price")
-cart_table.grid(row=1,column=0,columnspan=2,pady=(25,0))
+cart_table.grid(row=1,column=0,columnspan=3,pady=(25,0))
 Total_cost=Label(right_frame,text="Total cost: $0.00 ",bg="white",font=('Arial 19'),width=15,anchor=W)
-Total_cost.grid(row=2,column=0,sticky=W,columnspan=2,pady=10)
+Total_cost.grid(row=2,column=0,sticky=W,columnspan=3,pady=10)
 delete_button=Button(right_frame,text="Delete",width=9,command=delete_item)
 delete_button.grid(row=3,column=0,sticky=N,pady=9)
 deleteall_button=Button(right_frame,text="Delete All",width=9,command=deleteall_item)
 deleteall_button.grid(row=3,column=1,sticky=N,pady=9)
+pay_button=Button(right_frame,text="Pay",width=9)
+pay_button.grid(row=3,column=2,sticky=N,pady=9)
+
 
 
 
