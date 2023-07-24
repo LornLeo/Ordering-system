@@ -4,32 +4,37 @@ from PIL import ImageTk, Image
 from csv import writer
 from tkinter import messagebox
 import csv
-current_userid=0
 def login():
-    try:
         if Username_ent.get() and Password_ent.get():
             create_account=True
-            with open("user_database.csv", 'r') as file:
+            with open("user_database.csv", 'r',newline='') as file:
                 csvreader = csv.reader(file)
+                a=-1
                 for row in csvreader:
-                    print(row)
+                    a=a+1
                     if row!=[]:
                         if row[1]==Username_ent.get():
                             create_account=False
                             if row[2]==Password_ent.get():
                                 create_account=None
                                 window.destroy()
-                                import main_v3
+                                update_value("user_database.csv", a, "Status", "online")
+                                import main_v4
                 if create_account==True:
-                    result=messagebox.askyesno("Create account", "Invalid username\nYou can use these details to create an account")
+                    result=messagebox.askyesno("Create account", "Invalid username\nHowever, you can use these details to create an account")
                     if result==True:
                         User_ID=0
                         with open("user_database.csv", 'r') as file:
                             csvreader = csv.reader(file)
                             for row in csvreader:
                                 User_ID=User_ID+1
-                        List=[User_ID,Username_ent.get(),Password_ent.get()]
+                        List=[User_ID,Username_ent.get(),Password_ent.get(),"offline"]
                         with open('user_database.csv', 'a',newline='') as f_object:
+                            writer_object = writer(f_object)
+                            writer_object.writerow(List)
+                            f_object.close()
+                        List=[User_ID,"1","0","unpaid"]
+                        with open('order_database.csv', 'a',newline='') as f_object:
                             writer_object = writer(f_object)
                             writer_object.writerow(List)
                             f_object.close()
@@ -43,9 +48,19 @@ def login():
                 messagebox.showerror("Error", "Please enter the password")
             else:
                 messagebox.showerror("Error", "Please enter the Username")
-    except:
-        pass
-            
+
+
+def update_value(csv_file, row_index, column_name, new_value):
+    with open(csv_file, 'r', newline='') as file:
+        csv_reader = csv.reader(file)
+        rows = list(csv_reader)
+        column_index = rows[0].index(column_name)
+        rows[row_index][column_index] = new_value
+
+        with open(csv_file, 'w', newline='') as file:
+            csv_writer = csv.writer(file)
+            csv_writer.writerows(rows)
+
 window = Tk()
 window.geometry('850x525')
 window.title("Login")
@@ -77,6 +92,17 @@ Password_ent.grid(row=2, column=1,sticky=W,pady=(23,0))
 Create_button.grid(row=3,column=1,sticky=NE)'''
 Login_button = Button(Entry_frame, text="Login", command=login,width=20,font=('serif 13'),fg="white",bg="black")
 Login_button.grid(row=4,column=1,sticky=E,pady=(15,0))
-
-
+try:
+    with open("user_database.csv", 'r') as file:
+        csvreader = csv.reader(file)
+        b=0
+        for row in csvreader:
+            b=b+1
+            if b==1:
+                pass
+            else:
+                update_value("user_database.csv", (b-1), "Status", "offline")
+except:
+    pass
+#update_value("user_database.csv", 1, "Status", "1")
 window.mainloop()
