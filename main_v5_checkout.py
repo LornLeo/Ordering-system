@@ -63,7 +63,7 @@ def pay(Firstname, Lastname, Phonenumber, Address):
                 # Display success message and restart the main_v5.py
                 messagebox.showinfo("Success", "Successfully paid")
                 window.destroy()
-                subprocess.run(['python', 'main_v5.py'])
+                subprocess.run(['python', 'main_page_v5.py'])
             else:
                 pass
         else:
