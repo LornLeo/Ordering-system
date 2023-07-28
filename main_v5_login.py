@@ -21,7 +21,7 @@ def login():
                         if row[2] == Password_ent.get():
                             window.destroy()
                             update_value("user_database.csv", a, "Status", "online")
-                            subprocess.run(['python', 'main_page_v5.py'])
+                            subprocess.run(['python', 'main_menu_v5.py'])
                         else:
                             messagebox.showerror("showerror", "Wrong password")
                             break        
