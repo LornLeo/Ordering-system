@@ -63,7 +63,7 @@ def pay(Firstname, Lastname, Phonenumber, Address):
                 # Display success message and restart the main_v5.py
                 messagebox.showinfo("Success", "Successfully paid")
                 window.destroy()
-                subprocess.run(['python', 'main_page_v5.py'])
+                subprocess.run(['python', 'main_v5_menu.py'])
             else:
                 pass
         else:
@@ -97,14 +97,14 @@ def pay(Firstname, Lastname, Phonenumber, Address):
                 # Display success message and restart the main_v5.py
                 messagebox.showinfo("Success", "Successfully paid")
                 window.destroy()
-                subprocess.run(['python', 'main_v5.py'])
+                subprocess.run(['python', 'main_v5_menu.py'])
         else:
             messagebox.showerror("Error", "All the information should be entered")
 
 # Function to go back to main_v5.py
 def back():
     window.destroy()
-    subprocess.run(['python', 'main_v5.py'])
+    subprocess.run(['python', 'main_v5_menu.py'])
     
 #GUI setting
 window = Tk()
