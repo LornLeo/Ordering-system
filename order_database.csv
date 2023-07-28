@@ -1,1 +1,1 @@
-User_id,Order_number,Total amount,Status
+User_id,Order_number,Total amount,Status,First name,Last name,Phone number,Address
