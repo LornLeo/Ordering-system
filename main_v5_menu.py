@@ -533,6 +533,12 @@ def logout():
         pass
     else:
     # Close the current window and start the login window.
+        with open("user_database.csv", 'r') as file:
+            csvreader = csv.reader(file)
+            rows=list(csvreader)
+        for item in rows:
+            if item[0]==user_id:
+                item[3]="offline"
         window.destroy()
         subprocess.run(['python', 'main_v5_login.py'])
 
@@ -598,15 +604,15 @@ def open_orderhistory():
     for item in rows:
         if item[0] == user_id and item[3] == "Paid":
             History_list.append(item[1])
-
-    print(History_list)
-    print(rows)
+            
     for item in History_list:
         for item1 in rows1:
             print(item)
             print(item1[1])
             if item1[0] == user_id and item1[1] == item:
                 cart_table.insert('', 'end', values=(item1[1], item1[2], item1[3], item1[4]))
+def disable_event():
+   pass
 
 #Set up the window 
 window = Tk()
@@ -614,7 +620,7 @@ window.geometry('1020x550')
 window.title("Menu")
 window.resizable(0, 0)
 window.configure(bg="white")
-
+window.protocol("WM_DELETE_WINDOW", disable_event)
 #Set up the left frame for category button
 left_frame = Frame(window,bg="white")
 left_frame.grid(row=0,column=0,rowspan=3,sticky=N)
@@ -744,8 +750,6 @@ cart_table.grid(row=1,column=0,columnspan=3,pady=(25,0))
 with open("order_database.csv", 'r') as file:
     csvreader = csv.reader(file)
     order=list(csvreader)
-print(user_id)
-print(Order_number)
 for item in order:
     if item[0]==user_id and item[1]==Order_number and item[3]=="unpaid":
         Total_amount=item[2]
