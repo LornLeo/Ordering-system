@@ -536,9 +536,13 @@ def logout():
         with open("user_database.csv", 'r') as file:
             csvreader = csv.reader(file)
             rows=list(csvreader)
+        print(rows)
         for item in rows:
             if item[0]==user_id:
                 item[3]="offline"
+        with open("user_database.csv", 'w', newline='') as file:
+            csv_writer = csv.writer(file)
+            csv_writer.writerows(rows)
         window.destroy()
         subprocess.run(['python', 'main_v5_login.py'])
 
@@ -757,6 +761,9 @@ Total_cost=Label(right_frame,text="Total cost: ${}".format(Total_amount),bg="whi
 with open("orderdetail_database.csv", 'r') as file:
     csvreader = csv.reader(file)
     order=list(csvreader)
+# Update the 'cart_table' to display the user's specific order details
+# Also, populate the 'cart_list' with the order details for later use
+# And set the 'initial_quantity' variables for each item based on user's order
 for item in order:
     if item[0]==user_id and item[1]==Order_number:
         cart_table.insert('', 'end',values=(item[2],item[3],item[4]))  
