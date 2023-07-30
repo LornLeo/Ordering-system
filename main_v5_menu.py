@@ -302,9 +302,7 @@ def add_order(item_name,item_quantity,item_price):
                 with open("orderdetail_database.csv", 'w', newline='') as file:
                     csv_writer = csv.writer(file)
                     csv_writer.writerows(rows)
-        
-            
-    
+                    
 #When clicking the next page button or last page button, the page will change and show another set of food item
 def next_page():
     global page_number
@@ -527,6 +525,7 @@ def deleteall_item():
                     csv_writer.writerows(rows)
         else:
             pass
+            
 def logout():
     result=messagebox.askyesno('Log out','Are you sure?')
     if result==False:
@@ -614,6 +613,7 @@ def open_orderhistory():
             print(item1[1])
             if item1[0] == user_id and item1[1] == item:
                 cart_table.insert('', 'end', values=(item1[1], item1[2], item1[3], item1[4]))
+                
 def disable_event():
    pass
 
@@ -784,10 +784,6 @@ deleteall_button=Button(right_frame,text="Delete All",width=9,command=deleteall_
 deleteall_button.grid(row=3,column=1,sticky=N,pady=9)
 pay_button=Button(right_frame,text="Pay",width=9,command=pay)
 pay_button.grid(row=3,column=2,sticky=N,pady=9)
-
-
-
-
 
 #class the food item
 #use init method to set the attribute for each food item,including image, name, price,description
