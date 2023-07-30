@@ -105,13 +105,16 @@ def pay(Firstname, Lastname, Phonenumber, Address):
 def back():
     window.destroy()
     subprocess.run(['python', 'main_v5_menu.py'])
-    
+# disable the close window function
+def disable_event():
+   pass
 #GUI setting
 window = Tk()
 window.geometry('500x450')
 window.title("Login")
 window.resizable(0, 0)
 window.configure(bg="white")
+window.protocol("WM_DELETE_WINDOW", disable_event)
 left_frame = Frame(window,bg="white")
 left_frame.grid(row=0,column=0,sticky=N)
 menu_title = Label(left_frame,text="Checkout",font=('Rockwell 21'),bg='#fcc302',fg="white",width=9,padx=30,pady=2)
