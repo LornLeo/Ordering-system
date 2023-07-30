@@ -536,7 +536,6 @@ def logout():
         with open("user_database.csv", 'r') as file:
             csvreader = csv.reader(file)
             rows=list(csvreader)
-        print(rows)
         for item in rows:
             if item[0]==user_id:
                 item[3]="offline"
