@@ -609,8 +609,6 @@ def open_orderhistory():
             
     for item in History_list:
         for item1 in rows1:
-            print(item)
-            print(item1[1])
             if item1[0] == user_id and item1[1] == item:
                 cart_table.insert('', 'end', values=(item1[1], item1[2], item1[3], item1[4]))
                 
