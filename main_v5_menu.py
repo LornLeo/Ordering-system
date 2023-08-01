@@ -212,6 +212,7 @@ def add_order(item_name,item_quantity,item_price):
                     csv_writer = csv.writer(file)
                     csv_writer.writerows(rows)
         else:
+            messagebox.showerror("Error","Please select the quantity")
             # If the cart is empty, do nothing.
             pass            
     else:
@@ -222,6 +223,7 @@ def add_order(item_name,item_quantity,item_price):
         cart_item["Price"] = item_price
         # If the spinbox value is not changing which is same as the quantity value in cart, then do nothing.
         if cart_item in cart_list:
+            messagebox.showerror("Error","The item has already added into the cart.\nPlease change the quantity to update it")
             pass
         else:
         # If the item is already in the cart, update its quantity.
@@ -613,7 +615,8 @@ def open_orderhistory():
                 cart_table.insert('', 'end', values=(item1[1], item1[2], item1[3], item1[4]))
                 
 def disable_event():
-   pass
+    messagebox.showerror("Error","Please first log out")
+    pass
 
 #Set up the window 
 window = Tk()
